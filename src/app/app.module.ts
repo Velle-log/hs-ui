@@ -8,17 +8,20 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule, MatMenuModule, MatButtonModule, MatGridListModule,
         MatSidenavModule, MatCardModule, MatTabsModule } from '@angular/material';
-import { LandingComponent } from './pages/landing/landing.component';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { LandingModule } from './module/landing/landing.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LandingComponent
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FlexLayoutModule,
     MatToolbarModule,
     MatIconModule,
     MatMenuModule,
