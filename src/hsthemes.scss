@@ -1,0 +1,27 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$dark-primary: mat-palette($mat-grey, 100);
+$dark-accent:  mat-palette($mat-amber, A200, A100, A400);
+$dark-warn:    mat-palette($mat-deep-orange);
+$dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+$background-color: rgb(20, 20, 20);
+$secondary-dark: rgb(38, 38, 38);
+
+$background: map-get($dark-theme, background);
+$background: map_merge($background, (background: $background-color));
+$background: map-merge($background, (card: $secondary-dark));
+$background: map-merge($background, (dialog: $secondary-dark));
+$background: map-merge($background, (raised-button: $secondary-dark));
+$background: map-merge($background, (selected-disabled-button: $secondary-dark));
+
+$dark-theme: map_merge($dark-theme, (background: $background));
+
+$custom-typography: mat-typography-config(
+  $font-family: 'Poppins',
+);
+
+@include angular-material-typography($custom-typography);
+@include angular-material-theme($dark-theme);

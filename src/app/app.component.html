@@ -1,23 +1,4 @@
-<mat-toolbar color="primary">
-
-  <button mat-button routerLink="/">
-      {{title}}
-  </button>
-
-  <span class="fill-remaining-space"></span>
-  <div fxLayout="row" fxShow="false" fxShow.gt-sm>
-      <button mat-button routerLink="/">Products</button>
-      <button mat-button routerLink="/">Dashboard</button>
-  </div>
-  <button mat-button [mat-menu-trigger-for]="menu" fxHide="false" fxHide.gt-sm>
-   <mat-icon>menu</mat-icon>
-  </button>
-
-</mat-toolbar>
-<mat-menu x-position="before" #menu="matMenu">
-  <button mat-menu-item routerLink="/">Referrals</button>
-  <button mat-menu-item routerLink="/">Dashboard</button>
-</mat-menu>
+<app-header></app-header>
 <mat-sidenav-container class="example-sidenav-container">
   <mat-sidenav-content>
     <router-outlet></router-outlet>
