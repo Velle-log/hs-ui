@@ -1,38 +1,15 @@
 .facade-div {
   height: 100vh; 
-  padding: 0px;
-  margin: 0px;
+  display: flex;
+  align-items: center;
   background-image: linear-gradient(to bottom,#F5F5F5, rgb(20, 20, 20));
 }
 
 .second-panel {
   height: 80vh;
+  display: flex;
+  align-items: center;
   background-image: linear-gradient(to bottom, #b00020, #44010d);
-}
-
-.second-header {
-  color: #D7CCC8;
-  position: absolute;
-  padding: 0px;
-  top: 125vh;
-  left: 15vw;
-  width: 40vw;
-  background-color: rgba(0, 0, 0, 0);
-}
-
-.third-header {
-  color: rgb(20, 20, 20);
-  position: absolute;
-  padding: 0px;
-  top: 225vh;
-  left: 15vw;
-  width: 40vw;
-  background-color: rgba(0, 0, 0, 0);
-}
-
-.third-panel {
-  height: 100vh;
-  background-image: linear-gradient(to bottom, #D7CCC8, rgb(172, 162, 159));
 }
 
 .cut-triangle {
@@ -41,12 +18,35 @@
   border-left: solid 98.5vw #44010d;
 }
 
-.primary-header {
-  color: #b00020;
-  position: absolute;
+.third-panel {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  background-image: linear-gradient(to bottom, #D7CCC8, rgb(172, 162, 159));
+}
+
+.panel-header {
+  position: relative;
   padding: 0px;
-  top: 25vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
   left: 15vw;
   width: 40vw;
   background-color: rgba(0, 0, 0, 0);
+  .red {
+    color: #b00020;
+  }
+  
+  .beige {
+    color: #D7CCC8;
+  }
+ 
+  .black {
+    color: rgb(20, 20, 20);
+  }
 }
+
+
+
