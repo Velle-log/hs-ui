@@ -7,10 +7,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule, MatMenuModule, MatButtonModule, MatGridListModule,
-        MatSidenavModule, MatCardModule, MatTabsModule, MatDialogModule, MatFormFieldModule, MatFormFieldControl, MatInputModule, MatDividerModule } from '@angular/material';
+        MatSidenavModule, MatCardModule, MatTabsModule, MatDialogModule, MatFormFieldModule, MatFormFieldControl, MatInputModule, MatDividerModule, MatStepperModule } from '@angular/material';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AuthModalContent } from './shared/components/auth-modal/auth-modal.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { AuthModalContent } from './shared/components/auth-modal/auth-modal.comp
     AppRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
+    FormsModule,
     MatToolbarModule,
     MatIconModule,
     MatMenuModule,
@@ -35,7 +37,8 @@ import { AuthModalContent } from './shared/components/auth-modal/auth-modal.comp
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDividerModule
+    MatDividerModule,
+    MatStepperModule
   ],
   entryComponents: [
     AuthModalContent
