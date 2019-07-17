@@ -25,3 +25,12 @@ $custom-typography: mat-typography-config(
 
 @include angular-material-typography($custom-typography);
 @include angular-material-theme($dark-theme);
+
+.accent-themed {
+  $yellow-theme-primary: mat-palette($mat-amber, A200, A100, A400);
+
+  $yellow-theme: map_merge($dark-theme, (primary: $yellow-theme-primary));
+
+  @include angular-material-theme($yellow-theme);
+}
+

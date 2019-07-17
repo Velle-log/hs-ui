@@ -28,46 +28,57 @@
       </div>
     </mat-tab>
     <mat-tab label="Sign Up">  
-      <mat-horizontal-stepper [linear]="true" #stepper>
-        <mat-step [completed]="emailBuffer.isCorrect">
-          <ng-template matStepLabel>Enter Email</ng-template>
-          <form #f="ngForm" (ngSubmit)="checkEmail(stepper)">
-            <mat-form-field style="min-width:80%" appearance="outline">
-              <mat-label>Email</mat-label>
-              <input [(ngModel)]="emailBuffer.email" name="email" matInput required>
+      <div class="accent-themed">
+        <mat-horizontal-stepper [linear]="true" #stepper>
+          <mat-step [completed]="emailBuffer.isCorrect" state="email">
+            <ng-template matStepLabel><span fxShow.lt-md="false"> Email</span></ng-template>
+            <form #f="ngForm" (ngSubmit)="checkEmail(stepper)">
+              <mat-form-field style="min-width:80%" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input [(ngModel)]="emailBuffer.email" name="email" matInput required>
+              </mat-form-field>
+              <mat-dialog-actions >
+                <button type="submit" color="accent" mat-button>Next</button>
+              </mat-dialog-actions>
+            </form>
+          </mat-step>
+          <mat-step state="otp">
+            <ng-template matStepLabel><span fxShow.lt-md="false">Verify Email</span></ng-template>
+            <mat-form-field appearance="outline">
+              <mat-label>OTP</mat-label>
+              <input matInput required>
             </mat-form-field>
-            <mat-dialog-actions >
-              <button type="submit" mat-button>Next</button>
+            <mat-dialog-actions>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button color="accent" matStepperNext>Next</button>
             </mat-dialog-actions>
-          </form>
-        </mat-step>
-        <mat-step>
-          <ng-template matStepLabel>Verify Email</ng-template>
-          <mat-form-field appearance="outline">
-            <mat-label>OTP</mat-label>
-            <input matInput required>
-          </mat-form-field>
-          <mat-dialog-actions>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
-          </mat-dialog-actions>
-        </mat-step>
-        <mat-step fxLayout="column" fxLayoutAlign="flex-start">
-          <ng-template matStepLabel>Set Password</ng-template>
-          <mat-form-field appearance="outline">
-            <mat-label>Password</mat-label>
-            <input matInput type="password" required>
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>Repeat Password</mat-label>
-            <input matInput type="password" required>
-          </mat-form-field>
-          <mat-dialog-actions>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button (click)="stepper.reset()">Reset</button>
-          </mat-dialog-actions>
-        </mat-step>
-      </mat-horizontal-stepper>
+          </mat-step>
+          <mat-step fxLayout="column" fxLayoutAlign="flex-start" state="password">
+            <ng-template matStepLabel><span fxShow.lt-md="false">Set Password</span></ng-template>
+            <mat-form-field style="min-width: 80%;" appearance="outline">
+              <mat-label>Password</mat-label>
+              <input matInput type="password" required>
+            </mat-form-field>
+            <mat-form-field style="min-width: 80%;" appearance="outline">
+              <mat-label>Repeat Password</mat-label>
+              <input matInput type="password" required>
+            </mat-form-field>
+            <mat-dialog-actions>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button color="accent" (click)="stepper.reset()">Finish</button>
+            </mat-dialog-actions>
+          </mat-step>
+          <ng-template matStepperIcon="email">
+            <mat-icon>email</mat-icon>
+          </ng-template>
+          <ng-template matStepperIcon="otp">
+            <mat-icon>verified_user</mat-icon>
+          </ng-template>
+          <ng-template matStepperIcon="password">
+            <mat-icon>lock</mat-icon>
+          </ng-template>
+        </mat-horizontal-stepper>
+      </div>
     </mat-tab>
   </mat-tab-group>
 </div>
