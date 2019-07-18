@@ -1,15 +1,42 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatIconModule, MatToolbarModule, MatMenuModule, MatButtonModule, 
+        MatGridListModule, MatSidenavModule, MatCardModule, MatTabsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatStepperModule } from '@angular/material';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { AuthModalContent } from './shared/components/auth-modal/auth-modal.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FlexLayoutModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatGridListModule,
+        MatSidenavModule,
+        MatCardModule,
+        MatTabsModule,
+        MatGridListModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDividerModule,
+        MatStepperModule
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        HeaderComponent
       ],
     }).compileComponents();
   }));
@@ -20,16 +47,9 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'hs-ui'`, () => {
+  it(`should have as title 'Hire Smart'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('hs-ui');
-  });
-
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to hs-ui!');
+    expect(app.title).toEqual('Hire Smart');
   });
 });

@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LandingComponent } from './pages/landing/landing.component';
 
 const routes: Routes = [
   {
     path: 'main',
-    component: LandingComponent
+    loadChildren: () => import('./module/landing/landing.module').then(mod => mod.LandingModule)
+  },
+  {
+    path: 'challenges',
+    loadChildren: () => import('./module/challenges/challenges.module').then(mod => mod.ChallengesModule)
   },
   {
     path: '',
