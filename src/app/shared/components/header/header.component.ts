@@ -13,7 +13,8 @@ export class HeaderComponent implements OnInit {
 
   openAuthModal() {
     const authModalRef = this.authModal.open(AuthModalContent);
-    authModalRef.afterClosed().subscribe(result => console.log("The Auth Modal is closed!"));
+    // TODO: Add reset auth modal on 
+    // authModalRef.afterClosed().subscribe(result => console.log("The Auth Modal is closed!"));
   }
 
   ngOnInit() {

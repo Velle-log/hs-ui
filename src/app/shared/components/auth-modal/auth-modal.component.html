@@ -30,7 +30,7 @@
     <mat-tab label="Sign Up">  
       <div class="accent-themed">
         <mat-horizontal-stepper [linear]="true" #stepper>
-          <mat-step [completed]="emailBuffer.isCorrect" state="email">
+          <mat-step [completed]="emailBuffer.isVerified" state="email">
             <ng-template matStepLabel><span fxShow.lt-md="false"> Email</span></ng-template>
             <form #f="ngForm" (ngSubmit)="checkEmail(stepper)">
               <mat-form-field style="min-width:80%" appearance="outline">

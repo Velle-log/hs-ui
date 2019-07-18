@@ -13,20 +13,23 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
       }],
 })
 export class AuthModalContent implements OnInit {
-    emailBuffer: {email: String, isCorrect: Boolean};
+    emailBuffer: {email: String, isVerified: Boolean};
     OTP: Number;
     password: String;
 
     constructor() {}
 
     ngOnInit() {
-        this.emailBuffer = {email: "", isCorrect: false};
+        this.emailBuffer = {email: "", isVerified: false};
     }
 
     checkEmail(stepper) {
         if(this.emailBuffer.email != ''){
-            this.emailBuffer.isCorrect = true;
+            // TODO: Add email verification logic.
+            // Dummy flow start
+            this.emailBuffer.isVerified = true;
             setTimeout(() => stepper.next(), 200);
+            // Dummy flow end
         }
     }
 }
