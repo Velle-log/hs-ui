@@ -2,14 +2,17 @@
 
 @include mat-core();
 
+// Dark theme base
 $dark-primary: mat-palette($mat-grey, 100);
 $dark-accent:  mat-palette($mat-amber, A200, A100, A400);
 $dark-warn:    mat-palette($mat-deep-orange);
 $dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 
+// Custom dark theme background colors
 $background-color: rgb(20, 20, 20);
 $secondary-dark: rgb(38, 38, 38);
 
+// Creating a copy of default dark theme background colors and replacing with the custom background
 $background: map-get($dark-theme, background);
 $background: map_merge($background, (background: $background-color));
 $background: map-merge($background, (card: $secondary-dark));
@@ -17,11 +20,22 @@ $background: map-merge($background, (dialog: $secondary-dark));
 $background: map-merge($background, (raised-button: $secondary-dark));
 $background: map-merge($background, (selected-disabled-button: $secondary-dark));
 
+// Replacing the new background map to the theme
 $dark-theme: map_merge($dark-theme, (background: $background));
 
+// Customising font for all themes
 $custom-typography: mat-typography-config(
   $font-family: 'Poppins',
 );
 
+// Registering typography and theme
 @include angular-material-typography($custom-typography);
 @include angular-material-theme($dark-theme);
+
+// Custom accent coloring for component defaulting on primary color
+.accent-themed {
+  $yellow-theme-primary: mat-palette($mat-amber, A200, A100, A400);
+  $yellow-theme: map_merge($dark-theme, (primary: $yellow-theme-primary));
+
+  @include angular-material-theme($yellow-theme);
+}

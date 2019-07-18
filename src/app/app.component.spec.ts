@@ -6,8 +6,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule, MatToolbarModule, MatMenuModule, MatButtonModule, 
-        MatGridListModule, MatSidenavModule, MatCardModule, MatTabsModule } from '@angular/material';
+        MatGridListModule, MatSidenavModule, MatCardModule, MatTabsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatStepperModule } from '@angular/material';
 import { HeaderComponent } from './shared/components/header/header.component';
+import { AuthModalContent } from './shared/components/auth-modal/auth-modal.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -15,18 +16,23 @@ describe('AppComponent', () => {
       imports: [
         RouterTestingModule,
         BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    FlexLayoutModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatMenuModule,
-    MatButtonModule,
-    MatGridListModule,
-    MatSidenavModule,
-    MatCardModule,
-    MatTabsModule,
-    MatGridListModule
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        FlexLayoutModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatGridListModule,
+        MatSidenavModule,
+        MatCardModule,
+        MatTabsModule,
+        MatGridListModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatDividerModule,
+        MatStepperModule
       ],
       declarations: [
         AppComponent,
