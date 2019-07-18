@@ -4,13 +4,13 @@
       <div class="flex" fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" fxLayoutAlign="flex-start"> 
         <div class="creds-login" fxLayout="column" fxLayoutAlign="flex-start">
           <h2>Login</h2>
-          <mat-form-field appearance="outline" style="min-width: 25vw;">
+          <mat-form-field class="mw-25v" appearance="outline">
             <mat-label>Email</mat-label>
-            <input matInput type="text" placeholder="" cdkFocusInitial>
+            <input matInput type="text" cdkFocusInitial>
           </mat-form-field>
-          <mat-form-field appearance="outline" style="min-width: 25vw;">
+          <mat-form-field class="mw-25v" appearance="outline">
             <mat-label>Password</mat-label>
-            <input matInput type="password" placeholder="">
+            <input matInput type="password">
           </mat-form-field>
           <div align="end">
             <button mat-button mat-dialog-close>Cancel</button>
@@ -33,7 +33,7 @@
           <mat-step [completed]="emailBuffer.isVerified" state="email">
             <ng-template matStepLabel><span fxShow.lt-md="false"> Email</span></ng-template>
             <form #f="ngForm" (ngSubmit)="checkEmail(stepper)">
-              <mat-form-field style="min-width:80%" appearance="outline">
+              <mat-form-field class="mw-80" appearance="outline">
                 <mat-label>Email</mat-label>
                 <input [(ngModel)]="emailBuffer.email" name="email" matInput required>
               </mat-form-field>
@@ -55,11 +55,11 @@
           </mat-step>
           <mat-step fxLayout="column" fxLayoutAlign="flex-start" state="password">
             <ng-template matStepLabel><span fxShow.lt-md="false">Set Password</span></ng-template>
-            <mat-form-field style="min-width: 80%;" appearance="outline">
+            <mat-form-field class="mw-80" appearance="outline">
               <mat-label>Password</mat-label>
               <input matInput type="password" required>
             </mat-form-field>
-            <mat-form-field style="min-width: 80%;" appearance="outline">
+            <mat-form-field class="mw-80" appearance="outline">
               <mat-label>Repeat Password</mat-label>
               <input matInput type="password" required>
             </mat-form-field>
