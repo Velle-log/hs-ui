@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { AuthService, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 
 @Component({
     selector: 'auth-modal-content',
@@ -19,7 +20,15 @@ export class AuthModalContent implements OnInit {
     OTP: Number;
     password: String;
 
-    constructor() {}
+    constructor(private socialAuthService: AuthService) {}
+
+    googleSignIn(): void {
+        this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
+    }
+    
+    facebookSignIn(): void {
+        this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    }
 
     ngOnInit() {
         this.emailBuffer = {email: "", isVerified: false};

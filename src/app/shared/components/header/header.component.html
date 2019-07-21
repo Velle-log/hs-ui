@@ -7,7 +7,7 @@
   <span class="fill-remaining-space"></span>
   <div fxLayout="row" fxShow="false" fxShow.gt-sm>
     <button mat-button routerLink="/">Referrals</button>
-    <button mat-button routerLink="/challenges">Challenges</button>
+    <button mat-button routerLink="challenges">Challenges</button>
     <button mat-button (click)="openAuthModal()">Login</button>
   </div>
   <button mat-button [mat-menu-trigger-for]="menu" fxHide="false" fxHide.gt-sm>
@@ -18,6 +18,6 @@
 </mat-toolbar>
 <mat-menu x-position="before" #menu="matMenu">
   <button mat-menu-item routerLink="/">Referrals</button>
-  <button mat-menu-item routerLink="/challenges">Challenges</button>
+  <button mat-menu-item routerLink="challenges">Challenges</button>
   <button mat-menu-item (click)="openAuthModal()">Login</button>
 </mat-menu>

@@ -5,13 +5,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
+
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule, MatMenuModule, MatButtonModule, MatGridListModule,
-        MatSidenavModule, MatCardModule, MatTabsModule, MatDialogModule, MatFormFieldModule, MatFormFieldControl, MatInputModule, MatDividerModule, MatStepperModule } from '@angular/material';
+        MatSidenavModule, MatCardModule, MatTabsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatStepperModule } from '@angular/material';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AuthModalContent } from './shared/components/auth-modal/auth-modal.component';
 import { FormsModule } from '@angular/forms';
+
+import { getSocialAuthConfig } from './config/app.config';
 
 @NgModule({
   declarations: [
@@ -23,8 +27,13 @@ import { FormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+
+    // Operations
     FlexLayoutModule,
     FormsModule,
+    SocialLoginModule,
+
+    // Material Component
     MatToolbarModule,
     MatIconModule,
     MatMenuModule,
@@ -43,7 +52,12 @@ import { FormsModule } from '@angular/forms';
   entryComponents: [
     AuthModalContent
   ],
-  providers: [],
+  providers: [
+    {
+      provide: AuthServiceConfig,
+      useFactory: getSocialAuthConfig,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
