@@ -1,4 +1,5 @@
 import { AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+import { GOOGLE_OAUTH2_CLIENT_ID } from './constants';
 
 // Add all API endpoints and configurations here
 // TODO: Use Injectable for the config? and move socialAuthConfig to module?
@@ -8,7 +9,7 @@ import { AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from 'a
 export let socialAuthConfig = new AuthServiceConfig([
     {
         id: GoogleLoginProvider.PROVIDER_ID,
-        provider: new GoogleLoginProvider("<Client_ID>"),
+        provider: new GoogleLoginProvider(GOOGLE_OAUTH2_CLIENT_ID),
     },
     {
         id: FacebookLoginProvider.PROVIDER_ID,

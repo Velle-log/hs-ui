@@ -1,0 +1,1 @@
+export const GOOGLE_OAUTH2_CLIENT_ID = '634386749126-liauim3unnrontiunefjlna58ff9e663.apps.googleusercontent.com';
