@@ -29,7 +29,7 @@ export class HSAuthService implements OnInit {
   public isAuthenticated(): Observable<Boolean> | Boolean {
     let authToken: HSAuthToken = JSON.parse(sessionStorage.getItem(hsAuthTokenName));
     if(authToken) {
-      console.log(authToken);
+      console.log(authToken);       // REMOVE
       return this.tokenIsValid(authToken);
     }
     else {
@@ -39,12 +39,12 @@ export class HSAuthService implements OnInit {
 
   public tokenIsValid(authToken: HSAuthToken): Observable<Boolean> | Boolean {
     let headers = new HttpHeaders().set('Authorization', `${authToken.tokenType} ${authToken.accessToken}`)
-    .set('Accept', 'application/json')
-    .set('Access-Control-Allow-Origin', '*');
+                                    .set('Accept', 'application/json')
+                                    .set('Access-Control-Allow-Origin', '*');
     let httpOptions = {
       headers: headers
     };
-    console.log(this.http.get<JSON>(API_ENDPOINT.AUTH.GET_USER, httpOptions).subscribe((user) => console.log(user)));
+    console.log(this.http.get<JSON>(API_ENDPOINT.AUTH.GET_USER, httpOptions).subscribe((user) => console.log(user))); //REMOVE
     return true;
   }
 
@@ -52,7 +52,7 @@ export class HSAuthService implements OnInit {
     this.socialAuthService.authState.subscribe((user) => {
       if(user){
         this.socialUser = user;
-        console.log(user);
+        console.log(user);    // REMOVE
         this.convertAuthToken(user);
       }
     });
@@ -65,12 +65,10 @@ export class HSAuthService implements OnInit {
       headers: new HttpHeaders().set('Accept', 'application/json')
                                 .set('Access-Control-Allow-Origin', '*'),
     };
-    let request = this.http.post<HSAuthToken>(API_ENDPOINT.AUTH.CONVERT_TOKEN, requestData, httpOptions);
-    console.log(request);
-    request.subscribe((authToken) => {
+    this.http.post<HSAuthToken>(API_ENDPOINT.AUTH.CONVERT_TOKEN, requestData, httpOptions).subscribe((authToken) => {
       this.user.authToken = authToken;
       sessionStorage.setItem(hsAuthTokenName, JSON.stringify(authToken));
-      console.log(authToken);
-    });
+      console.log(authToken);    // REMOVE
+    });;
   }
 }
