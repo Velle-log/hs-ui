@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SocialUser, AuthService } from 'angularx-social-login';
+import { HSAuthService } from './shared/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -11,15 +12,9 @@ export class AppComponent implements OnInit {
   private user: SocialUser;
   private isAuthenticated: boolean;
 
-  constructor(private socialAuthService: AuthService) { }
+  constructor(private socialAuthService: AuthService, private hsAuthService: HSAuthService) { }
 
   ngOnInit() {
-    this.socialAuthService.authState.subscribe((user) => {
-      this.user = user;
-      this.isAuthenticated = (user != null);
-      // Dummy Flow
-      // TODO: With the fields returned store them in Cookies? or local maybe
-      console.log(user);
-    })
+    this.hsAuthService.isAuthenticated();
   }
 }

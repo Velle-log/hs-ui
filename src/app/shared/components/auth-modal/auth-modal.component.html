@@ -34,7 +34,7 @@
             <ng-template matStepLabel><span fxShow.lt-md="false"> Email</span></ng-template>
             <form #f="ngForm" (ngSubmit)="checkEmail(stepper)">
               <mat-form-field class="mw-80" appearance="outline">
-                <mat-label>Email</mat-label>
+                <mat-label cdkFocusInitial>Email</mat-label>
                 <input [(ngModel)]="emailBuffer.email" name="email" matInput required>
               </mat-form-field>
               <mat-dialog-actions >
@@ -45,7 +45,7 @@
           <mat-step state="otp">
             <ng-template matStepLabel><span fxShow.lt-md="false">Verify Email</span></ng-template>
             <mat-form-field appearance="outline">
-              <mat-label>OTP</mat-label>
+              <mat-label cdkFocusInitial>OTP</mat-label>
               <input matInput required>
             </mat-form-field>
             <mat-dialog-actions>
@@ -56,7 +56,7 @@
           <mat-step fxLayout="column" fxLayoutAlign="flex-start" state="password">
             <ng-template matStepLabel><span fxShow.lt-md="false">Set Password</span></ng-template>
             <mat-form-field class="mw-80" appearance="outline">
-              <mat-label>Password</mat-label>
+              <mat-label cdkFocusInitial>Password</mat-label>
               <input matInput type="password" required>
             </mat-form-field>
             <mat-form-field class="mw-80" appearance="outline">

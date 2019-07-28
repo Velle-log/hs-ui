@@ -16,6 +16,7 @@ import { AuthModalContent } from './shared/components/auth-modal/auth-modal.comp
 import { FormsModule } from '@angular/forms';
 
 import { getSocialAuthConfig } from './config/app.config';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { getSocialAuthConfig } from './config/app.config';
     FlexLayoutModule,
     FormsModule,
     SocialLoginModule,
+    HttpClientModule,
 
     // Material Component
     MatToolbarModule,

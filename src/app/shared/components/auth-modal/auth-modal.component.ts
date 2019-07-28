@@ -16,7 +16,7 @@ import { AuthService, GoogleLoginProvider, FacebookLoginProvider } from 'angular
       }],
 })
 export class AuthModalContent implements OnInit {
-    emailBuffer: {email: String, isVerified: Boolean};
+    emailBuffer: { email: String, isVerified: Boolean };
     OTP: Number;
     password: String;
 
@@ -31,7 +31,7 @@ export class AuthModalContent implements OnInit {
     }
 
     ngOnInit() {
-        this.emailBuffer = {email: "", isVerified: false};
+        this.emailBuffer = { email: "", isVerified: false };
     }
 
     checkEmail(stepper) {
