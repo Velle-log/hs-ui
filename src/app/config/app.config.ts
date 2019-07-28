@@ -5,7 +5,7 @@ import { AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from 'a
 // TODO: Using environment config and app config in conjunction?
 
 // Social App Configurations
-export const webUIClientId = "Sh3f6fMDaEEB9Cku0GJgNbQhEfXLXT05RHN9weh9";
+export const webUIClientId = "";
 
 export enum SocialAuthProvider {
     GOOGLE = "google-oauth2",
@@ -22,11 +22,11 @@ export enum SocialAuthProviderName {
 export let socialAuthConfig = new AuthServiceConfig([
     {
         id: GoogleLoginProvider.PROVIDER_ID,
-        provider: new GoogleLoginProvider("634386749126-va58fbj5eo2hh42so98g15bgqflu5c0m.apps.googleusercontent.com"),
+        provider: new GoogleLoginProvider(""),
     },
     {
         id: FacebookLoginProvider.PROVIDER_ID,
-        provider: new FacebookLoginProvider("1427376524067462"),
+        provider: new FacebookLoginProvider(""),
     }
 ]);
   
