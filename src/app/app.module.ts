@@ -14,7 +14,6 @@ import { HeaderComponent } from './shared/components/header/header.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AuthModalContent } from './shared/components/auth-modal/auth-modal.component';
 import { FormsModule } from '@angular/forms';
-
 import { getSocialAuthConfig } from './config/app.config';
 import { HttpClientModule } from '@angular/common/http';
 
