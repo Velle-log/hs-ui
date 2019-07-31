@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { SocialUser, AuthService } from 'angularx-social-login';
 import { HSAuthService } from './shared/services/auth.service';
 
 @Component({
@@ -9,10 +8,8 @@ import { HSAuthService } from './shared/services/auth.service';
 })
 export class AppComponent implements OnInit {
   title = 'Hire Smart';
-  private user: SocialUser;
-  private isAuthenticated: boolean;
 
-  constructor(private socialAuthService: AuthService, private hsAuthService: HSAuthService) { }
+  constructor(private hsAuthService: HSAuthService) { }
 
   ngOnInit() {
     this.hsAuthService.isAuthenticated();

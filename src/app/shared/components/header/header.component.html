@@ -8,7 +8,8 @@
   <div fxLayout="row" fxShow="false" fxShow.gt-sm>
     <button mat-button routerLink="/">Referrals</button>
     <button mat-button routerLink="challenges">Challenges</button>
-    <button mat-button (click)="openAuthModal()">Login</button>
+    <button mat-button *ngIf="getIsAuthenticated()!= true; else logoutButton1" (click)="openAuthModal()">Login</button>
+    <ng-template #logoutButton1><button mat-button (click)="logout()">Logout</button></ng-template>
   </div>
   <button mat-button [mat-menu-trigger-for]="menu" fxHide="false" fxHide.gt-sm>
     <mat-icon>menu</mat-icon>
@@ -19,5 +20,6 @@
 <mat-menu x-position="before" #menu="matMenu">
   <button mat-menu-item routerLink="/">Referrals</button>
   <button mat-menu-item routerLink="challenges">Challenges</button>
-  <button mat-menu-item (click)="openAuthModal()">Login</button>
+  <button mat-menu-item *ngIf="getIsAuthenticated()!= true; else logoutButton2" (click)="openAuthModal()">Login</button>
+  <ng-template #logoutButton2 ><button mat-menu-item (click)="logout()">Logout</button></ng-template>
 </mat-menu>

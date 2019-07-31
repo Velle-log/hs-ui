@@ -1,7 +1,7 @@
 export class HSAuthToken {
-    accessToken: String;
+    accessToken: string;
     expiresIn: number;
-    tokenType: String;  // TODO: Replace String type to enum for all possible values
-    scope: String;      // TODO: ^
-    refreshToken: String;
+    tokenType: string;  // TODO: Replace String type to enum for all possible values
+    scope: string;      // TODO: ^
+    refreshToken: string;
 }

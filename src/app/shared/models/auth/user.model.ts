@@ -1,8 +1,10 @@
 import { HSAuthToken } from './hs-auth-token.model';
 
 export class User {
-    email: String;
-    username: String;
-    name: String;
+    email: string;
+    username: string;
+    firstName: string;
+    lastName: string;
     authToken: HSAuthToken;
+    isAuthenticated: Boolean;
 }
