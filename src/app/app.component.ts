@@ -12,6 +12,11 @@ export class AppComponent implements OnInit {
   constructor(private hsAuthService: HSAuthService) { }
 
   ngOnInit() {
-    this.hsAuthService.isAuthenticated();
+    this.hsAuthService.isAuthenticated().subscribe((flag: Boolean) => {
+      if(flag)
+        console.log("Successfully restored session!");
+      else 
+        console.log("No session found");
+    });
   }
 }
