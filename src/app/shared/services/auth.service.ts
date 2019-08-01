@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { User } from '../models/auth/user.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService, SocialUser, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
@@ -6,11 +6,12 @@ import { HSAuthToken } from '../models/auth/hs-auth-token.model';
 import { HSAuthRequestBuilder } from '../models/auth/hs-auth-request.model';
 import { API_ENDPOINT, hsAuthTokenName, SocialAuthProviderName } from 'src/app/config/app.config';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap, catchError, flatMap } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
 
 // TODO: use ngx-logger to replace console.log (dev/prod)
 // TODO: think of using merge map in place of flat pipe map (JAT)
+// TODO: reconsider void return type for refresh token and convert token
 
 @Injectable({
   providedIn: 'root'
@@ -71,12 +72,12 @@ export class HSAuthService {
     sessionStorage.removeItem(hsAuthTokenName);
   }
   // Auth Check methods
-  public isAuthenticated(): Observable<Boolean> | Boolean {
+  public isAuthenticated(): Observable<Boolean> {
     let authToken: HSAuthToken = this.getSessionToken();
     if(authToken)
       return this.tokenIsValid(authToken);
     else
-      return false;
+      return of(false);
   }
   
   public tokenIsValid(authToken: HSAuthToken): Observable<Boolean> {
@@ -85,18 +86,15 @@ export class HSAuthService {
     let httpOptions = {
       headers: headers
     };
-    let valid = new Observable<Boolean>();
-    let userReq = this.http.get<User>(API_ENDPOINT.AUTH.GET_USER, httpOptions);
-    userReq.subscribe((user) => {
+    return this.http.get<User>(API_ENDPOINT.AUTH.GET_USER, httpOptions).pipe(
+      flatMap((user) => {
       if(user){
         this.user = user;
         this.user.authToken = authToken;
         this.user.isAuthenticated = true;
       }
-    }, (error) => {
-      this.refreshAuthToken(authToken);
-    }); 
-    return userReq.pipe(map(user => !!user));
+      return of(!!user);
+    }));
   }
 
   public socialAuthCheck(provider: SocialAuthProviderName): Observable<Boolean> {
@@ -132,7 +130,7 @@ export class HSAuthService {
       location.reload();
     }, (error) => {
       console.error("We encountered an error while converting the token.", error);
-    });;
+    });
   }
 
   public refreshAuthToken(authToken: HSAuthToken): void {
@@ -150,27 +148,22 @@ export class HSAuthService {
   }
 
   public credLogin(username: string, password: string): Observable<HSAuthToken> {
+    console.log("cred login called");
     const requestData = HSAuthRequestBuilder.creds(username, password);
     const httpOptions = {
       headers: new HttpHeaders().set('Accept', 'application/json')
     };
     console.log(requestData);
-    const req = this.http.post<HSAuthToken>(API_ENDPOINT.AUTH.GET_TOKEN, requestData, httpOptions)
-    req.subscribe((authToken)=>{
-      this.tokenIsValid(authToken).subscribe((res) => {
-        this._messageBar.open(
-          `Successfully logged in as ${this.user.username}`,
-          "Close",
-          {
-            duration: 2000,
-          }
-        )
-      });
-    }, (error) => {
-      console.error(`Failed to login using creds. Error: `, error.error);
-      sessionStorage.removeItem(hsAuthTokenName);
-    });
-    return req;
+    return this.http.post<HSAuthToken>(API_ENDPOINT.AUTH.GET_TOKEN, requestData, httpOptions).pipe(
+      tap((authToken) =>{
+        this.setSessionToken(authToken);
+        this.tokenIsValid(authToken).subscribe((res) => {
+          this._messageBar.open(`Successfully logged in as ${this.user.username}`,"Close",{
+              duration: 2000,
+            }
+          )
+        });
+      }));
   }
 
   // Invalidate token methods
