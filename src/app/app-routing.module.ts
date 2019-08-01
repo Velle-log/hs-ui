@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthModalContent } from './shared/components/auth-modal/auth-modal.component';
 
 const routes: Routes = [
   {
@@ -9,6 +10,10 @@ const routes: Routes = [
   {
     path: 'challenges',
     loadChildren: () => import('./module/challenges/challenges.module').then(mod => mod.ChallengesModule)
+  },
+  {
+    path: 'login',
+    component: AuthModalContent
   },
   {
     path: '',
