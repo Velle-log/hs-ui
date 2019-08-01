@@ -25,13 +25,35 @@ export class HSAuthService {
   }
 
   public googleSignIn(): void {   // return observable for login
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
-    this.socialAuthCheck(SocialAuthProviderName.GOOGLE);
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then((user) => {
+      if(user){
+        this.socialUser = user;
+        this.convertAuthToken(user);
+      }
+      else {
+        this._messageBar.open("Unable to fetch social login details!", "Close", {
+          duration: 2000, // TODO: Set to default duration
+        })
+      }
+    }).catch((error) => {
+      console.error(error.error);
+    });
   }
 
   public facebookSignIn(): void { //return observable for login
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
-    this.socialAuthCheck(SocialAuthProviderName.FACEBOOK);
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then((user) => {
+      if(user){
+        this.socialUser = user;
+        this.convertAuthToken(user);
+      }
+      else {
+        this._messageBar.open("Unable to fetch social login details!", "Close", {
+          duration: 2000, // TODO: Set to default duration
+        })
+      }
+    }).catch((error) => {
+      console.error(error.error);
+    });
   }
 
   // Getters
