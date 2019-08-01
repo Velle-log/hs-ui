@@ -7,8 +7,10 @@ import { HSAuthRequestBuilder } from '../models/auth/hs-auth-request.model';
 import { API_ENDPOINT, hsAuthTokenName, SocialAuthProviderName } from 'src/app/config/app.config';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material';
 
 // TODO: use ngx-logger to replace console.log (dev/prod)
+// TODO: think of using merge map in place of flat pipe map (JAT)
 
 @Injectable({
   providedIn: 'root'
@@ -17,27 +19,44 @@ export class HSAuthService {
   public user: User = new User();
   private socialUser: SocialUser;
 
-  constructor(private http: HttpClient, private socialAuthService: AuthService) {
+  constructor(private http: HttpClient, 
+              private socialAuthService: AuthService,
+              private _messageBar: MatSnackBar) {
   }
 
-  public googleSignIn(): void {
+  public googleSignIn(): void {   // return observable for login
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
     this.socialAuthCheck(SocialAuthProviderName.GOOGLE);
   }
 
-  public facebookSignIn(): void {
+  public facebookSignIn(): void { //return observable for login
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID);
     this.socialAuthCheck(SocialAuthProviderName.FACEBOOK);
   }
 
+  // Getters
+  private getSessionToken(): HSAuthToken {
+    return JSON.parse(sessionStorage.getItem(hsAuthTokenName)) as HSAuthToken;
+  }
+  
+  // Setters
+  private setSessionToken(hsAuthToken: HSAuthToken): void {
+    sessionStorage.setItem(hsAuthTokenName, JSON.stringify(hsAuthToken));
+  }
+
+  // Delete
+  private removeSessionToken() {
+    sessionStorage.removeItem(hsAuthTokenName);
+  }
+  // Auth Check methods
   public isAuthenticated(): Observable<Boolean> | Boolean {
-    let authToken: HSAuthToken = JSON.parse(sessionStorage.getItem(hsAuthTokenName));
+    let authToken: HSAuthToken = this.getSessionToken();
     if(authToken)
       return this.tokenIsValid(authToken);
     else
       return false;
   }
-
+  
   public tokenIsValid(authToken: HSAuthToken): Observable<Boolean> {
     let headers = new HttpHeaders().set('Authorization', `${authToken.tokenType} ${authToken.accessToken}`)
                                     .set('Accept', 'application/json');
@@ -78,14 +97,15 @@ export class HSAuthService {
     return authState.pipe(map(user => !!user));
   }
 
+  // Token exchange methods
   public convertAuthToken(socialUser: SocialUser): void {
-    let requestData = HSAuthRequestBuilder.social(socialUser);
-    let httpOptions = {
+    const requestData = HSAuthRequestBuilder.social(socialUser);
+    const httpOptions = {
       headers: new HttpHeaders().set('Accept', 'application/json'),
     };
     this.http.post<HSAuthToken>(API_ENDPOINT.AUTH.CONVERT_TOKEN, requestData, httpOptions).subscribe((authToken) => {
       this.user.authToken = authToken;
-      sessionStorage.setItem(hsAuthTokenName, JSON.stringify(authToken));
+      this.setSessionToken(authToken);
       console.log("Successfully converted token", authToken);
       location.reload();
     }, (error) => {
@@ -93,32 +113,60 @@ export class HSAuthService {
     });;
   }
 
-  public refreshAuthToken(authToken: HSAuthToken) {
-    let requestData = HSAuthRequestBuilder.refresh(authToken);
-    let httpOptions = {
+  public refreshAuthToken(authToken: HSAuthToken): void {
+    const requestData = HSAuthRequestBuilder.refresh(authToken);
+    const httpOptions = {
       headers: new HttpHeaders().set('Accept', 'application/json')
     };
     this.http.post<HSAuthToken>(API_ENDPOINT.AUTH.GET_TOKEN, requestData, httpOptions).subscribe((authToken)=>{
+      this.setSessionToken(authToken);
       this.tokenIsValid(authToken);
     }, (error) => {
-      console.error(`Failed to refresh Token. Error: ${error}`);
+      console.error(`Failed to refresh Token. Error: `, error.error);
       sessionStorage.removeItem(hsAuthTokenName);
     });
   }
 
+  public credLogin(username: string, password: string): Observable<HSAuthToken> {
+    const requestData = HSAuthRequestBuilder.creds(username, password);
+    const httpOptions = {
+      headers: new HttpHeaders().set('Accept', 'application/json')
+    };
+    console.log(requestData);
+    const req = this.http.post<HSAuthToken>(API_ENDPOINT.AUTH.GET_TOKEN, requestData, httpOptions)
+    req.subscribe((authToken)=>{
+      this.tokenIsValid(authToken).subscribe((res) => {
+        this._messageBar.open(
+          `Successfully logged in as ${this.user.username}`,
+          "Close",
+          {
+            duration: 2000,
+          }
+        )
+      });
+    }, (error) => {
+      console.error(`Failed to login using creds. Error: `, error.error);
+      sessionStorage.removeItem(hsAuthTokenName);
+    });
+    return req;
+  }
+
+  // Invalidate token methods
   public logout(): void {
-    let authToken: HSAuthToken = JSON.parse(sessionStorage.getItem(hsAuthTokenName));
+    const authToken: HSAuthToken = this.getSessionToken();
     if(this.user.authToken || authToken){
-      let requestData = HSAuthRequestBuilder.logout(this.user.authToken || authToken);
-      let httpOptions = {
+      const requestData = HSAuthRequestBuilder.logout(this.user.authToken || authToken);
+      const httpOptions = {
         headers: new HttpHeaders().set('Accept', 'application/json')
       };
       this.http.post(API_ENDPOINT.AUTH.LOGOUT, requestData, httpOptions).subscribe((data) => {
-        console.log("Successfully logged out!");
+        this._messageBar.open("Successfully Logged out!", "Close", {
+          duration: 2000
+        })
       }, (error) => {
         console.error(`Unable to login. ${error}`);
       });
-      sessionStorage.removeItem(hsAuthTokenName);
+      this.removeSessionToken();
       this.user = new User();
     }
   }

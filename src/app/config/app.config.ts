@@ -7,8 +7,8 @@ import { AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from 'a
 // Social App Configurations
 export const webUIClientId = "<Client_ID>";
 
-export const GOOGLE_OAUTH2_CLIENT_ID = '<Client ID>';
-export const FB_OAUTH2_CLIENT_ID = '<Client ID>';
+export const GOOGLE_OAUTH2_CLIENT_ID = '<Client_ID>';
+export const FB_OAUTH2_CLIENT_ID = '<Client_ID>';
 
 export enum SocialAuthProvider {
     GOOGLE = "google-oauth2",
@@ -47,11 +47,12 @@ export const UI_ENDPOINT = {
     // Add more routes here
 }
 
-export const API_URL = "<API_URL>";
+export const API_URL = "http://localhost:8000/";
+
+export const emailValidationPattern = '[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$';
 
 export const API_ENDPOINT = {
     AUTH: {
-        STATE: API_URL + "",
         CONVERT_TOKEN: API_URL + "auth/convert-token/",
         LOGOUT: API_URL + "auth/revoke-token/",
         GET_TOKEN: API_URL + "auth/token/",

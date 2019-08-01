@@ -9,11 +9,11 @@ import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule, MatMenuModule, MatButtonModule, MatGridListModule,
-        MatSidenavModule, MatCardModule, MatTabsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatStepperModule } from '@angular/material';
+        MatSidenavModule, MatCardModule, MatTabsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatStepperModule, MatSnackBarModule } from '@angular/material';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AuthModalContent } from './shared/components/auth-modal/auth-modal.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { getSocialAuthConfig } from './config/app.config';
 import { HttpClientModule } from '@angular/common/http';
@@ -32,6 +32,7 @@ import { HttpClientModule } from '@angular/common/http';
     // Operations
     FlexLayoutModule,
     FormsModule,
+    ReactiveFormsModule,
     SocialLoginModule,
     HttpClientModule,
 
@@ -49,7 +50,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatFormFieldModule,
     MatInputModule,
     MatDividerModule,
-    MatStepperModule
+    MatStepperModule,
+    MatSnackBarModule
   ],
   entryComponents: [
     AuthModalContent

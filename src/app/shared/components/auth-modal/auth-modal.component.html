@@ -2,20 +2,23 @@
   <mat-tab-group mat-align-tabs="center" dynamicHeight="true">
     <mat-tab label="Login">
       <div class="flex" fxLayout="row" fxLayout.lt-sm="column" fxLayoutGap="20px" fxLayoutAlign="flex-start"> 
-        <div class="creds-login" fxLayout="column" fxLayoutAlign="flex-start">
-          <h2>Login</h2>
-          <mat-form-field class="mw-25v" appearance="outline">
-            <mat-label>Email</mat-label>
-            <input matInput type="text" cdkFocusInitial>
-          </mat-form-field>
-          <mat-form-field class="mw-25v" appearance="outline">
-            <mat-label>Password</mat-label>
-            <input matInput type="password">
-          </mat-form-field>
-          <div align="end">
-            <button mat-button mat-dialog-close>Cancel</button>
-            <button mat-button color="accent">Login</button>
-          </div>
+        <div class="creds-login">
+          <form fxLayout="column" fxLayoutAlign="flex-start" [formGroup]="loginForm" (ngSubmit)="login()">
+            <h2>Login</h2>
+            <mat-error *ngIf="invalidCreds">{{ invalidCredsErrorMsg() }}</mat-error>
+            <mat-form-field class="mw-25v" appearance="outline">
+              <mat-label>username</mat-label>
+              <input matInput formControlName="username" type="text" cdkFocusInitial>
+            </mat-form-field>
+            <mat-form-field class="mw-25v" appearance="outline">
+              <mat-label>Password</mat-label>
+              <input matInput formControlName="password" type="password">
+            </mat-form-field>
+            <div align="end">
+              <button mat-button mat-dialog-close>Cancel</button>
+              <button mat-button [disabled]="!loginForm.valid" type="submit" color="accent">Login</button>
+            </div>
+          </form>
         </div>
         <mat-divider [vertical]="true"></mat-divider>
         <mat-divider></mat-divider>

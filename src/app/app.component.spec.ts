@@ -6,11 +6,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule, MatToolbarModule, MatMenuModule, MatButtonModule, 
-        MatGridListModule, MatSidenavModule, MatCardModule, MatTabsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatStepperModule } from '@angular/material';
+        MatGridListModule, MatSidenavModule, MatCardModule, MatTabsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatStepperModule, MatSnackBarModule } from '@angular/material';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { AuthModalContent } from './shared/components/auth-modal/auth-modal.component';
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { getSocialAuthConfig } from './config/app.config';
 
@@ -26,6 +26,7 @@ describe('AppComponent', () => {
         // Operations
         FlexLayoutModule,
         FormsModule,
+        ReactiveFormsModule,
         SocialLoginModule,
         HttpClientModule,
 
@@ -43,7 +44,8 @@ describe('AppComponent', () => {
         MatFormFieldModule,
         MatInputModule,
         MatDividerModule,
-        MatStepperModule
+        MatStepperModule,
+        MatSnackBarModule
       ],
       declarations: [
         AppComponent,
