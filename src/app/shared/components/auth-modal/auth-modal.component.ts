@@ -67,7 +67,7 @@ export class AuthModalContent implements OnInit {
       else
         msg("Unable to fetch social login details!");
     }, 
-    error => msg(`Unable to login! ${error.error}`)
+    error => msg(`Unable to login! ${error}`)
     );
   }
 

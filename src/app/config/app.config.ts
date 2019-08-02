@@ -6,11 +6,11 @@ import { GitHubLoginProvider } from '../shared/services/github.provider';
 // TODO: Using environment config and app config in conjunction?
 
 // Social App Configurations
-export const webUIClientId = "Sh3f6fMDaEEB9Cku0GJgNbQhEfXLXT05RHN9weh9";
+export const webUIClientId = "<Client_ID>";
 
-export const GOOGLE_OAUTH2_CLIENT_ID = '634386749126-va58fbj5eo2hh42so98g15bgqflu5c0m.apps.googleusercontent.com';
-export const FB_OAUTH2_CLIENT_ID = '1427376524067462';
-export const GITHUB_OAUTH2_CLIENT_ID = 'HwAr2OtSxRgEEnO2-JnYjsuA3tc';
+export const GOOGLE_OAUTH2_CLIENT_ID = '<Client_ID>';
+export const FB_OAUTH2_CLIENT_ID = '<Client_ID>';
+export const GITHUB_OAUTH2_CLIENT_ID = '<Client_ID>';
 
 export enum SocialAuthProvider {
     GOOGLE = "google-oauth2",
