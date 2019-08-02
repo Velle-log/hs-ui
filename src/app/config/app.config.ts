@@ -28,14 +28,17 @@ export let socialAuthConfig = new AuthServiceConfig([
     {
         id: FacebookLoginProvider.PROVIDER_ID,
         provider: new FacebookLoginProvider(FB_OAUTH2_CLIENT_ID),
+        lazyLoad: true,
     },
     {
         id: GoogleLoginProvider.PROVIDER_ID,
         provider: new GoogleLoginProvider(GOOGLE_OAUTH2_CLIENT_ID),
+        lazyLoad: true,
     },
     {
         id: GitHubLoginProvider.PROVIDER_ID,
         provider: new GitHubLoginProvider(GITHUB_OAUTH2_CLIENT_ID),
+        lazyLoad: true
     }
 ]);
   
