@@ -1,4 +1,5 @@
 import { AuthServiceConfig, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+import { GitHubLoginProvider } from '../shared/services/github.provider';
 
 // Add all API endpoints and configurations here
 // TODO: Use Injectable for the config? and move socialAuthConfig to module?
@@ -9,6 +10,7 @@ export const webUIClientId = "<Client_ID>";
 
 export const GOOGLE_OAUTH2_CLIENT_ID = '<Client_ID>';
 export const FB_OAUTH2_CLIENT_ID = '<Client_ID>';
+export const GITHUB_OAUTH2_CLIENT_ID = '<Client_ID>';
 
 export enum SocialAuthProvider {
     GOOGLE = "google-oauth2",
@@ -26,10 +28,17 @@ export let socialAuthConfig = new AuthServiceConfig([
     {
         id: FacebookLoginProvider.PROVIDER_ID,
         provider: new FacebookLoginProvider(FB_OAUTH2_CLIENT_ID),
+        lazyLoad: true,
     },
     {
         id: GoogleLoginProvider.PROVIDER_ID,
         provider: new GoogleLoginProvider(GOOGLE_OAUTH2_CLIENT_ID),
+        lazyLoad: true,
+    },
+    {
+        id: GitHubLoginProvider.PROVIDER_ID,
+        provider: new GitHubLoginProvider(GITHUB_OAUTH2_CLIENT_ID),
+        lazyLoad: true
     }
 ]);
   

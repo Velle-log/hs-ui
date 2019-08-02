@@ -9,7 +9,9 @@ import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule, MatMenuModule, MatButtonModule, MatGridListModule,
-        MatSidenavModule, MatCardModule, MatTabsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatStepperModule, MatSnackBarModule } from '@angular/material';
+        MatSidenavModule, MatCardModule, MatTabsModule, MatDialogModule, 
+        MatFormFieldModule, MatInputModule, MatDividerModule, MatStepperModule, 
+        MatSnackBarModule, MatProgressBarModule, MatProgressSpinnerModule } from '@angular/material';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AuthModalContent } from './shared/components/auth-modal/auth-modal.component';
@@ -51,7 +53,9 @@ import { HttpClientModule } from '@angular/common/http';
     MatInputModule,
     MatDividerModule,
     MatStepperModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule
   ],
   entryComponents: [
     AuthModalContent

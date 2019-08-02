@@ -1,62 +1,32 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/auth/user.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthService, SocialUser, GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
+import { AuthService, SocialUser } from 'angularx-social-login';
 import { HSAuthToken } from '../models/auth/hs-auth-token.model';
 import { HSAuthRequestBuilder } from '../models/auth/hs-auth-request.model';
 import { API_ENDPOINT, hsAuthTokenName, SocialAuthProviderName } from 'src/app/config/app.config';
-import { Observable, of } from 'rxjs';
-import { map, tap, catchError, flatMap } from 'rxjs/operators';
+import { Observable, of, from } from 'rxjs';
+import { map, tap, flatMap, take } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
 
-// TODO: use ngx-logger to replace console.log (dev/prod)
-// TODO: think of using merge map in place of flat pipe map (JAT)
 // TODO: reconsider void return type for refresh token and convert token
+// TODO: use take(n) for efficiency
+// TODO: create http option builder
 
 @Injectable({
   providedIn: 'root'
 })
 export class HSAuthService {
   public user: User = new User();
-  private socialUser: SocialUser;
 
   constructor(private http: HttpClient, 
               private socialAuthService: AuthService,
-              private _messageBar: MatSnackBar) {
-  }
+              private _messageBar: MatSnackBar) {}
 
-  public googleSignIn(): void {   // return observable for login
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then((user) => {
-      if(user){
-        this.socialUser = user;
-        this.convertAuthToken(user);
-      }
-      else {
-        this._messageBar.open("Unable to fetch social login details!", "Close", {
-          duration: 2000, // TODO: Set to default duration
-        })
-      }
-    }).catch((error) => {
-      console.error(error.error);
-    });
+  public socialSignIn(provider: string): Observable<SocialUser> {
+    return from(this.socialAuthService.signIn(provider));
   }
-
-  public facebookSignIn(): void { //return observable for login
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then((user) => {
-      if(user){
-        this.socialUser = user;
-        this.convertAuthToken(user);
-      }
-      else {
-        this._messageBar.open("Unable to fetch social login details!", "Close", {
-          duration: 2000, // TODO: Set to default duration
-        })
-      }
-    }).catch((error) => {
-      console.error(error.error);
-    });
-  }
-
+  
   // Getters
   private getSessionToken(): HSAuthToken {
     return JSON.parse(sessionStorage.getItem(hsAuthTokenName)) as HSAuthToken;
@@ -102,7 +72,6 @@ export class HSAuthService {
     authState.subscribe((user) => {
       if(user){
         if(user.provider == provider){
-          this.socialUser = user;
           this.convertAuthToken(user);
           console.warn(`User retrieved from ${provider} <=> ${user.provider}`);
         }
@@ -118,18 +87,23 @@ export class HSAuthService {
   }
 
   // Token exchange methods
-  public convertAuthToken(socialUser: SocialUser): void {
+  public convertAuthToken(socialUser: SocialUser): Observable<Boolean> {
     const requestData = HSAuthRequestBuilder.social(socialUser);
     const httpOptions = {
       headers: new HttpHeaders().set('Accept', 'application/json'),
     };
-    this.http.post<HSAuthToken>(API_ENDPOINT.AUTH.CONVERT_TOKEN, requestData, httpOptions).subscribe((authToken) => {
-      this.user.authToken = authToken;
-      this.setSessionToken(authToken);
-      console.log("Successfully converted token", authToken);
-      location.reload();
-    }, (error) => {
-      console.error("We encountered an error while converting the token.", error);
+    return new Observable(subscriber => {
+      this.http.post<HSAuthToken>(API_ENDPOINT.AUTH.CONVERT_TOKEN, requestData, httpOptions).subscribe((authToken) => {
+        this.user.authToken = authToken;
+        this.setSessionToken(authToken);
+        this.user.isAuthenticated = true;
+        subscriber.next(true);
+        subscriber.complete();
+      }, (error) => {
+        console.error("We encountered an error while converting the token.", error);
+        subscriber.error(error);
+        subscriber.complete();
+      });
     });
   }
 
@@ -148,21 +122,14 @@ export class HSAuthService {
   }
 
   public credLogin(username: string, password: string): Observable<HSAuthToken> {
-    console.log("cred login called");
     const requestData = HSAuthRequestBuilder.creds(username, password);
     const httpOptions = {
       headers: new HttpHeaders().set('Accept', 'application/json')
     };
-    console.log(requestData);
     return this.http.post<HSAuthToken>(API_ENDPOINT.AUTH.GET_TOKEN, requestData, httpOptions).pipe(
       tap((authToken) =>{
         this.setSessionToken(authToken);
-        this.tokenIsValid(authToken).subscribe((res) => {
-          this._messageBar.open(`Successfully logged in as ${this.user.username}`,"Close",{
-              duration: 2000,
-            }
-          )
-        });
+        this.tokenIsValid(authToken).subscribe((res) => {});
       }));
   }
 
@@ -174,7 +141,7 @@ export class HSAuthService {
       const httpOptions = {
         headers: new HttpHeaders().set('Accept', 'application/json')
       };
-      this.http.post(API_ENDPOINT.AUTH.LOGOUT, requestData, httpOptions).subscribe((data) => {
+      this.http.post(API_ENDPOINT.AUTH.LOGOUT, requestData, httpOptions).pipe(take(1)).subscribe((data) => {
         this._messageBar.open("Successfully Logged out!", "Close", {
           duration: 2000
         })
@@ -185,6 +152,5 @@ export class HSAuthService {
       this.user = new User();
     }
   }
-
 
 }

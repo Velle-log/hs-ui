@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule, MatToolbarModule, MatMenuModule, MatButtonModule, 
-        MatGridListModule, MatSidenavModule, MatCardModule, MatTabsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatStepperModule, MatSnackBarModule } from '@angular/material';
+        MatGridListModule, MatSidenavModule, MatCardModule, MatTabsModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatDividerModule, MatStepperModule, MatSnackBarModule, MatProgressSpinnerModule, MatProgressBarModule } from '@angular/material';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { AuthModalContent } from './shared/components/auth-modal/auth-modal.component';
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
@@ -45,7 +45,9 @@ describe('AppComponent', () => {
         MatInputModule,
         MatDividerModule,
         MatStepperModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        MatProgressSpinnerModule,
+        MatProgressBarModule
       ],
       declarations: [
         AppComponent,
