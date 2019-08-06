@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService, SocialUser } from 'angularx-social-login';
 import { HSAuthToken } from '../models/auth/hs-auth-token.model';
 import { HSAuthRequestBuilder } from '../models/auth/hs-auth-request.model';
-import { API_ENDPOINT, hsAuthTokenName, SocialAuthProviderName } from 'src/app/config/app.config';
+import { API_ENDPOINT, HS_AUTH_TOKEN_NAME, SocialAuthProviderName } from 'src/app/config/app.config';
 import { Observable, of, from } from 'rxjs';
 import { map, tap, flatMap, take } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material';
@@ -29,17 +29,17 @@ export class HSAuthService {
   
   // Getters
   private getSessionToken(): HSAuthToken {
-    return JSON.parse(sessionStorage.getItem(hsAuthTokenName)) as HSAuthToken;
+    return JSON.parse(sessionStorage.getItem(HS_AUTH_TOKEN_NAME)) as HSAuthToken;
   }
   
   // Setters
   private setSessionToken(hsAuthToken: HSAuthToken): void {
-    sessionStorage.setItem(hsAuthTokenName, JSON.stringify(hsAuthToken));
+    sessionStorage.setItem(HS_AUTH_TOKEN_NAME, JSON.stringify(hsAuthToken));
   }
 
   // Delete
   private removeSessionToken() {
-    sessionStorage.removeItem(hsAuthTokenName);
+    sessionStorage.removeItem(HS_AUTH_TOKEN_NAME);
   }
   
   // Auth Check methods
@@ -118,7 +118,7 @@ export class HSAuthService {
       this.tokenIsValid(authToken);
     }, (error) => {
       console.error(`Failed to refresh Token. Error: `, error.error);
-      sessionStorage.removeItem(hsAuthTokenName);
+      sessionStorage.removeItem(HS_AUTH_TOKEN_NAME);
     });
   }
 

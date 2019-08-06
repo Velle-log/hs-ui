@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { MatDialogRef, MatSnackBar } from '@angular/material';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { GitHubLoginProvider } from '../../services/github.provider';
-import { emailValidationPattern, snackBarDefaultOpt } from 'src/app/config/app.config';
+import { EMAIL_VALIDATION_PATTERN, MAT_SB_DEFAULT_OPT } from 'src/app/config/app.config';
 import { SnackBarCloseMsg, LoginFailMsg, SocialLoginFailMsg, LoginSuccessMsg } from '../../messages/auth.messages';
 
 // TODO: Create a messages.ts file for storing message strings
@@ -52,7 +52,7 @@ export class AuthModalContent implements OnInit {
   }
 
   private defaultMsg(msg: string, closeLoader?: Boolean): void {
-    this._messageBar.open(msg, SnackBarCloseMsg, snackBarDefaultOpt);
+    this._messageBar.open(msg, SnackBarCloseMsg, MAT_SB_DEFAULT_OPT);
     if(closeLoader)
       this.stopLoader();
   }
@@ -110,7 +110,7 @@ export class AuthModalContent implements OnInit {
 
   checkEmail(stepper) {
     if(this.emailBuffer.email != ''){
-      this.emailBuffer.email.match(emailValidationPattern);
+      this.emailBuffer.email.match(EMAIL_VALIDATION_PATTERN);
     }
   }
 }

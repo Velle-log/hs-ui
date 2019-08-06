@@ -6,11 +6,11 @@ import { GitHubLoginProvider } from '../shared/services/github.provider';
 // TODO: Using environment config and app config in conjunction?
 
 // Social App Configurations
-export const webUIClientId = "Sh3f6fMDaEEB9Cku0GJgNbQhEfXLXT05RHN9weh9";
+export const WEB_UI_CLIENT_ID = "<Client_id>";
 
-export const GOOGLE_OAUTH2_CLIENT_ID = '634386749126-va58fbj5eo2hh42so98g15bgqflu5c0m.apps.googleusercontent.com';
-export const FB_OAUTH2_CLIENT_ID = '1427376524067462';
-export const GITHUB_OAUTH2_CLIENT_ID = 'XwFkWDxtwhQa2q5X_YyHMQUfr4M';
+export const GOOGLE_OAUTH2_CLIENT_ID = '<Client_id>';
+export const FB_OAUTH2_CLIENT_ID = '<Client_id>';
+export const GITHUB_OAUTH2_CLIENT_ID = '<Client_id>';
 
 export enum SocialAuthProvider {
     GOOGLE = "google-oauth2",
@@ -24,7 +24,7 @@ export enum SocialAuthProviderName {
     GITHUB = "GITHUB",
 }
 
-export let socialAuthConfig = new AuthServiceConfig([
+export const SOCIAL_AUTH_CONFIG = new AuthServiceConfig([
     {
         id: FacebookLoginProvider.PROVIDER_ID,
         provider: new FacebookLoginProvider(FB_OAUTH2_CLIENT_ID),
@@ -43,7 +43,7 @@ export let socialAuthConfig = new AuthServiceConfig([
 ]);
   
 export function getSocialAuthConfig() {
-    return socialAuthConfig;
+    return SOCIAL_AUTH_CONFIG   ;
 }
 
 
@@ -58,7 +58,7 @@ export const UI_ENDPOINT = {
 
 export const API_URL = "http://localhost:8000/";
 
-export const emailValidationPattern = '[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$';
+export const EMAIL_VALIDATION_PATTERN = '[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$';
 
 export const API_ENDPOINT = {
     AUTH: {
@@ -70,11 +70,11 @@ export const API_ENDPOINT = {
     // TODO: Get API endpoints
 }
 
-export const hsAuthTokenName = "hsAuthToken";
+export const HS_AUTH_TOKEN_NAME = "hsAuthToken";
 
 
 // Mat component defaults
 
-export const snackBarDefaultOpt = {
+export const MAT_SB_DEFAULT_OPT = {
     duration: 2000,
 };

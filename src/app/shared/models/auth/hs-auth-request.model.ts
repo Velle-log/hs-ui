@@ -1,5 +1,5 @@
 import { SocialUser } from 'angularx-social-login';
-import { SocialAuthProvider, SocialAuthProviderName, webUIClientId } from 'src/app/config/app.config';
+import { SocialAuthProvider, SocialAuthProviderName, WEB_UI_CLIENT_ID } from 'src/app/config/app.config';
 import { HSAuthToken } from './hs-auth-token.model';
 
 class HSAuthBaseRequest {
@@ -27,7 +27,7 @@ export class HSAuthRequestBuilder {
 
         let authRequestData: HSSocialAuthRequest = {
             grantType: "convert_token",
-            clientId: webUIClientId,
+            clientId: WEB_UI_CLIENT_ID,
             backend: undefined,
             token: socialUser.authToken,
         }
@@ -47,7 +47,7 @@ export class HSAuthRequestBuilder {
     static refresh(authToken: HSAuthToken): HSTokenRefreshRequest {
         let tokenRefreshData: HSTokenRefreshRequest = {
             grantType: "refresh_token",
-            clientId: webUIClientId,
+            clientId: WEB_UI_CLIENT_ID,
             token: authToken.refreshToken,
         }
         return tokenRefreshData;
@@ -56,7 +56,7 @@ export class HSAuthRequestBuilder {
     static creds(username: string, password: string): HSCredAuthRequest {
         let credAuthData: HSCredAuthRequest = {
             grantType: "password",
-            clientId: webUIClientId,
+            clientId: WEB_UI_CLIENT_ID,
             username: username,
             password: password,
         } 
@@ -65,7 +65,7 @@ export class HSAuthRequestBuilder {
 
     static logout(authToken: HSAuthToken) {
         return {
-            clientId: webUIClientId,
+            clientId: WEB_UI_CLIENT_ID,
             token: authToken.accessToken
           }
     }
