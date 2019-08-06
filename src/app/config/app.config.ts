@@ -8,9 +8,9 @@ import { GitHubLoginProvider } from '../shared/services/github.provider';
 // Social App Configurations
 export const WEB_UI_CLIENT_ID = "<Client_id>";
 
-export const GOOGLE_OAUTH2_CLIENT_ID = '<Client_id>';
-export const FB_OAUTH2_CLIENT_ID = '<Client_id>';
-export const GITHUB_OAUTH2_CLIENT_ID = '<Client_id>';
+export const GOOGLE_OAUTH2_CLIENT_ID = '<Client_ID>';
+export const FB_OAUTH2_CLIENT_ID = '<Client_ID>';
+export const GITHUB_OAUTH2_CLIENT_ID = '<Client_ID>';
 
 export enum SocialAuthProvider {
     GOOGLE = "google-oauth2",
