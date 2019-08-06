@@ -6,11 +6,11 @@ import { GitHubLoginProvider } from '../shared/services/github.provider';
 // TODO: Using environment config and app config in conjunction?
 
 // Social App Configurations
-export const webUIClientId = "<Client_ID>";
+export const webUIClientId = "Sh3f6fMDaEEB9Cku0GJgNbQhEfXLXT05RHN9weh9";
 
-export const GOOGLE_OAUTH2_CLIENT_ID = '<Client_ID>';
-export const FB_OAUTH2_CLIENT_ID = '<Client_ID>';
-export const GITHUB_OAUTH2_CLIENT_ID = '<Client_ID>';
+export const GOOGLE_OAUTH2_CLIENT_ID = '634386749126-va58fbj5eo2hh42so98g15bgqflu5c0m.apps.googleusercontent.com';
+export const FB_OAUTH2_CLIENT_ID = '1427376524067462';
+export const GITHUB_OAUTH2_CLIENT_ID = 'XwFkWDxtwhQa2q5X_YyHMQUfr4M';
 
 export enum SocialAuthProvider {
     GOOGLE = "google-oauth2",
@@ -71,3 +71,10 @@ export const API_ENDPOINT = {
 }
 
 export const hsAuthTokenName = "hsAuthToken";
+
+
+// Mat component defaults
+
+export const snackBarDefaultOpt = {
+    duration: 2000,
+};

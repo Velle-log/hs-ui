@@ -41,6 +41,7 @@ export class HSAuthService {
   private removeSessionToken() {
     sessionStorage.removeItem(hsAuthTokenName);
   }
+  
   // Auth Check methods
   public isAuthenticated(): Observable<Boolean> {
     let authToken: HSAuthToken = this.getSessionToken();
