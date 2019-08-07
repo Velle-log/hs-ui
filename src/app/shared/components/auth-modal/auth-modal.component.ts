@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { MatDialogRef, MatSnackBar } from '@angular/material';
 import { GoogleLoginProvider, FacebookLoginProvider } from 'angularx-social-login';
 import { GitHubLoginProvider } from '../../services/github.provider';
+import { EMAIL_VALIDATION_PATTERN, MAT_SB_DEFAULT_OPT } from 'src/app/config/app.config';
+import { SnackBarCloseMsg, LoginFailMsg, SocialLoginFailMsg, LoginSuccessMsg } from '../../messages/auth.messages';
 
 // TODO: Create a messages.ts file for storing message strings
 // TODO: Add overlay loaders for god sake please.
@@ -48,56 +50,56 @@ export class AuthModalContent implements OnInit {
   ngOnInit() {
     this.emailBuffer = { email: "", isVerified: false };
   }
-  
+
+  private defaultMsg(msg: string, closeLoader?: Boolean): void {
+    this._messageBar.open(msg, SnackBarCloseMsg, MAT_SB_DEFAULT_OPT);
+    if(closeLoader)
+      this.stopLoader();
+  }
+
+  private stopLoader() {
+    setTimeout(() => {this.isLoading = false}, 200)
+  }
+
+  private startLoader() {
+    this.isLoading = true;
+  }
+   
   public socialSignIn(provider: string) {
-    let msg = (message: string) => {
-      this._messageBar.open(message, "Close", {
-        duration: 2000,   // TODO: use default times from config
-      });
-      /* To avoid slight delay in modal closing. look for adding loader overlay maybe. */
-      setTimeout(() => {this.isLoading = false}, 200);
-    };
     this.isLoading = true;
     this.authService.socialSignIn(provider).subscribe((user) => {
       if(user)
         this.authService.convertAuthToken(user).subscribe(() => {
-          msg(`Successfully Signed In!`);
+          this.defaultMsg(LoginSuccessMsg, true);
           this._modalRef.close();
         });
       else
-        msg("Unable to fetch social login details!");
+        this.defaultMsg(SocialLoginFailMsg, true);
     }, 
-    error => msg(`Unable to login! ${error}`)
+    error => this.defaultMsg(`${LoginFailMsg} ${error}`, true)
     );
   }
 
-  public googleSignIn(): void {   // return observable for login
+  public googleSignIn(): void {  
     this.socialSignIn(GoogleLoginProvider.PROVIDER_ID);
   }
 
-  public githubSignIn(): void {   // return observable for login
+  public githubSignIn(): void { 
     this.socialSignIn(GitHubLoginProvider.PROVIDER_ID);
   }
 
-  public facebookSignIn(): void { //return observable for login
+  public facebookSignIn(): void { 
     this.socialSignIn(FacebookLoginProvider.PROVIDER_ID);
   }
 
   login() {
     this.invalidCreds = false;
     this.isLoading = true;
-    let msg = (message: string) => {
-      this._messageBar.open(message, "Close", {
-        duration: 2000,   // TODO: use default times from config
-      });
-      /* To avoid slight delay in modal closing. look for adding loader overlay maybe. */
-      setTimeout(() => {this.isLoading = false}, 200);
-    };
     if(this.loginForm.valid){
       const req = this.authService.credLogin(this.loginForm.value.username, this.loginForm.value.password);
       req.subscribe((res) => {
         this._modalRef.close();
-        msg(`Successfully logged in as ${this.loginForm.value.username}`);
+        this.defaultMsg(LoginSuccessMsg, true);
         this.loginForm.reset();
       }, (error) => {
         this.invalidCreds = true;
@@ -106,21 +108,9 @@ export class AuthModalContent implements OnInit {
     }
   }
 
-  loginSuccessMsg() {   // TODO: Replace this with message.ts constants
-    return "Successfully Logged In!";
-  }
-
-  invalidCredsErrorMsg() {    // TODO: Replace this with message.ts constants
-    return "Invalid username/password.";
-  }
-
   checkEmail(stepper) {
     if(this.emailBuffer.email != ''){
-      // TODO: Add email verification logic.
-      // Dummy flow start
-      this.emailBuffer.isVerified = true;
-      setTimeout(() => stepper.next(), 200);
-      // Dummy flow end
+      this.emailBuffer.email.match(EMAIL_VALIDATION_PATTERN);
     }
   }
 }
